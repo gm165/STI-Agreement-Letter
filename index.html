@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="ur">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STI Agreement, Acceptance & Joining Report</title>
+    <style>
+        /* Base Setup */
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px 20px 80px 20px;
+            color: #000;
+        }
+
+        /* Top Action Bar (Screen Only) */
+        .action-bar {
+            max-width: 800px;
+            margin: 0 auto 15px auto;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .btn-print {
+            background-color: #0056b3;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+            transition: background-color 0.2s ease;
+        }
+
+        .btn-print:hover {
+            background-color: #003d80;
+        }
+
+        /* Printable Document Container */
+        .document-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .page {
+            background-color: #fff;
+            padding: 40px;
+            border: 1px solid #ccc;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
+            box-sizing: border-box;
+        }
+
+        /* Page Break Rule for Print/PDF */
+        .page-break {
+            page-break-before: always;
+            break-before: page;
+        }
+
+        /* Header / Memo Line */
+        .memo-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .annexure {
+            text-align: right;
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+        }
+
+        .doc-title {
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.2em;
+            text-decoration: underline;
+            margin-bottom: 25px;
+        }
+
+        /* Dynamic Input Styles (English) */
+        .field-line {
+            line-height: 2.2em;
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        input[type="text"], input[type="date"] {
+            border: none;
+            border-bottom: 1px dotted #000;
+            font-family: 'Times New Roman', 'Jameel Noori Nastaleeq', 'Urdu Typesetting', serif;
+            font-size: 1em;
+            font-weight: bold;
+            padding: 0 4px;
+            outline: none;
+            background: transparent;
+        }
+
+        input[type="text"]:focus, input[type="date"]:focus {
+            border-bottom: 1px solid #0056b3;
+            background-color: #f0f7ff;
+        }
+
+        /* Terms & Conditions Table */
+        .terms-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .terms-table th, .terms-table td {
+            border: 1px solid #000;
+            padding: 7px 10px;
+            vertical-align: top;
+            font-size: 0.95em;
+        }
+
+        .terms-table td:first-child {
+            font-weight: bold;
+            width: 30%;
+            background-color: #f9f9f9;
+        }
+
+        /* Signatures & Stamps */
+        .signature-block {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-top: 30px;
+            margin-bottom: 20px;
+        }
+
+        .stamp-box {
+            border: 1px dashed #000;
+            width: 200px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-size: 0.85em;
+            color: #555;
+        }
+
+        ol.distribution-list {
+            padding-left: 20px;
+            margin-top: 10px;
+            line-height: 1.8em;
+        }
+
+        /* --- URDU JOINING REPORT STYLING (PAGE 3) --- */
+        .urdu-page {
+            direction: rtl;
+            text-align: right;
+            font-family: 'Jameel Noori Nastaleeq', 'Urdu Typesetting', 'Noto Nastaliq Urdu', Arial, sans-serif;
+        }
+
+        .urdu-title {
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.5em;
+            margin-bottom: 5px;
+        }
+
+        .urdu-subtitle {
+            text-align: center;
+            font-size: 1.1em;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .urdu-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+
+        .urdu-table td {
+            border: 1px solid #000;
+            padding: 8px;
+            font-size: 1.05em;
+            vertical-align: middle;
+        }
+
+        .urdu-table td.num-col {
+            width: 5%;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .urdu-table td.label-col {
+            width: 30%;
+            font-weight: bold;
+            background-color: #fafafa;
+        }
+
+        .urdu-table td input[type="text"] {
+            width: 95%;
+            text-align: right;
+        }
+
+        /* Footer & WhatsApp Button Styles */
+        .site-footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #1e293b;
+            color: #ffffff;
+            padding: 12px 20px;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.15);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-sizing: border-box;
+            z-index: 1000;
+            font-family: Arial, sans-serif;
+        }
+
+        .footer-branding {
+            font-size: 0.95rem;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+
+        .whatsapp-btn {
+            background-color: #25d366;
+            color: #ffffff;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: background-color 0.2s ease, transform 0.2s ease;
+        }
+
+        .whatsapp-btn:hover {
+            background-color: #1da851;
+            transform: translateY(-1px);
+        }
+
+        /* Print Optimization */
+        @media print {
+            body {
+                background: #fff;
+                padding: 0;
+            }
+            .action-bar, .site-footer {
+                display: none !important;
+            }
+            .document-container {
+                width: 100%;
+                max-width: 100%;
+            }
+            .page {
+                box-shadow: none;
+                border: none;
+                padding: 0;
+                margin-bottom: 0;
+            }
+            input[type="text"], input[type="date"] {
+                border-bottom: 1px dotted #000;
+            }
+            input[type="date"]::-webkit-calendar-picker-indicator {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Print Button -->
+    <div class="action-bar">
+        <button class="btn-print" onclick="window.print()">Print Agreement & Joining</button>
+    </div>
+
+    <div class="document-container">
+        
+        <!-- PAGE 1: LETTER OF AGREEMENT -->
+        <div class="page">
+            <div class="annexure">Annexure - A</div>
+
+            <div class="memo-header">
+                <!-- Memo No. and Date are NOT synced (independent per page) -->
+                <div>Memo No. <input type="text" style="width: 150px;"></div>
+                <div>Date: <input type="date" style="width: 140px;"></div>
+            </div>
+
+            <div class="doc-title">
+                LETTER OF AGREEMENT FOR HIRING OF SCHOOL TEACHER INTERNS
+            </div>
+
+            <!-- Recipient & Intro Paragraph (Synced fields) -->
+            <div class="field-line">
+                Mr./Ms. <input type="text" data-sync="teacherName" style="width: 220px;"> S/O, D/O, W/O <input type="text" data-sync="teacherParent" style="width: 220px;"><br>
+                R/O <input type="text" data-sync="teacherAddress" style="width: 280px;"> (as per Domicile/CNIC/Passport), District <input type="text" data-sync="district" style="width: 150px;">,<br>
+                CNIC No. <input type="text" data-sync="cnic" style="width: 180px;"> is hereby offered placement as STI (<input type="text" data-sync="level" style="width: 120px;" placeholder="level"> level) at  <input type="text" data-sync="schoolName" style="width: 300px;" placeholder="School Name"> School, EMIS Code <input type="text" data-sync="emis" style="width: 120px;"> on the following terms and conditions:
+            </div>
+
+            <!-- Terms and Conditions Table -->
+            <table class="terms-table">
+                <tr>
+                    <td>Stipend</td>
+                    <td>Monthly stipend shall be paid as per criteria mentioned at para IX above.</td>
+                </tr>
+                <tr>
+                    <td>Duration / Term of Internship</td>
+                    <td>Upto 9 months, excluding summer vacations.</td>
+                </tr>
+                <tr>
+                    <td>T.A/D.A</td>
+                    <td>No T.A/D.A shall be admissible.</td>
+                </tr>
+                <tr>
+                    <td>Leave</td>
+                    <td>Two casual leaves per month shall be allowed with prior permission from the authority.</td>
+                </tr>
+                <tr>
+                    <td>Transfer</td>
+                    <td>The placement shall be non-transferable.</td>
+                </tr>
+                <tr>
+                    <td>Provision of bogus documents</td>
+                    <td>If at any stage, it is discovered that any STI secured his/her placement on the basis of forged/bogus document(s), or through deceit by any means, the placement shall be considered void ab-initio.</td>
+                </tr>
+                <tr>
+                    <td>Joining period</td>
+                    <td>Three working days shall be the joining time from the issuance of letter of agreement. Extension of three working days in joining period may be obtained from the Principal/Head of the relevant school, failing which his/her letter of agreement shall stand cancelled and the next in merit candidate may be offered letter of agreement.</td>
+                </tr>
+                <tr>
+                    <td>No right of regular placement</td>
+                    <td>Hiring of STIs shall be a non-transferable temporary arrangement in a particular school. Placement shall neither confer any right of regular placement nor regularization of the candidate in service under any circumstances.</td>
+                </tr>
+                <tr>
+                    <td>Experience certificate</td>
+                    <td>Upon completion of tenure, an experience certificate in favor of candidate may be issued.</td>
+                </tr>
+                <tr>
+                    <td>Termination of Internship</td>
+                    <td>As mentioned in para VI and XI of the policy.</td>
+                </tr>
+            </table>
+
+            <div class="field-line">
+                If you accept the above said Terms and Conditions of STI Program (<input type="text" data-sync="level" style="width: 80px;" placeholder="level"> Level) at <input type="text" data-sync="schoolName" style="width: 300px;" placeholder="School Name"> School, please submit your acceptance on or by <input type="date" data-sync="acceptanceDate" style="width: 140px;"> to the undersigned and submit your joining in the above cited school within three days.
+            </div>
+
+            <!-- Principal Sign Block (Page 1) - Date independent -->
+            <div class="signature-block">
+                <div>Date: <input type="date" style="width: 140px;"></div>
+                <div class="stamp-box">
+                    PRINCIPAL/HEAD TEACHER STAMP
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE 2: ACCEPTANCE & ENDORSEMENT -->
+        <div class="page page-break">
+            <div class="doc-title" style="text-decoration: underline; font-size: 1.2em; margin-top: 10px;">
+                ACCEPTANCE
+            </div>
+            
+            <div class="field-line" style="margin-top: 30px;">
+                I, <input type="text" data-sync="teacherName" style="width: 220px;"> S/O, D/O, W/O <input type="text" data-sync="teacherParent" style="width: 220px;"> resident of Tehsil <input type="text" data-sync="tehsil" style="width: 150px;"> District <input type="text" data-sync="district" style="width: 150px;"> hereby accept the offer of Internship as STI (<input type="text" data-sync="level" style="width: 80px;" placeholder="level"> Level) at <input type="text" data-sync="schoolName" style="width: 300px;" placeholder="School Name"> School, EMIS Code <input type="text" data-sync="emis" style="width: 120px;">.
+            </div>
+
+            <div class="signature-block" style="margin-top: 40px;">
+                <div>Date: <input type="date" data-sync="acceptanceDate" style="width: 140px;"></div>
+                <div>Signature of STI: <input type="text" data-sync="teacherName" style="width: 200px;"></div>
+            </div>
+
+            <hr style="margin: 40px 0 25px 0; border: none; border-top: 1px dashed #000;">
+
+            <!-- Endorsement Block - Memo/Date independent -->
+            <div>
+                <div>Endt No. <input type="text" style="width: 160px;"> Dated: <input type="date" style="width: 140px;"></div>
+                <p style="margin-top: 15px; margin-bottom: 10px; font-weight: bold;">A copy is forwarded for information & necessary action to:</p>
+                <ol class="distribution-list">
+                    <li>The CEO, DEA</li>
+                    <li>DEO (SE/W-EE/M-EE)</li>
+                    <li>Dy. DEO Concerned</li>
+                    <li>AEO Concerned</li>
+                    <li>Head Teacher Concerned</li>
+                    <li>Internee concerned</li>
+                    <li>Office File</li>
+                </ol>
+            </div>
+
+            <!-- Principal Sign Block (Page 2) -->
+            <div class="signature-block" style="margin-top: 60px;">
+                <div></div>
+                <div class="stamp-box">
+                    PRINCIPAL/HEAD TEACHER STAMP
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE 3: URDU JOINING REPORT -->
+        <div class="page urdu-page page-break">
+            <div class="urdu-title">رپورٹ حاضری سکول ٹیچر انٹر نیز</div>
+            <div class="urdu-subtitle">از دفتر ہیڈ ماسٹر / ہیڈ مسٹرس <input type="text" data-sync="schoolName" style="width: 300px;"></div>
+
+            <!-- Memo/Date independent -->
+            <div style="display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 15px;">
+                <div>نمبر: <input type="text" style="width: 150px;"></div>
+                <div>مورخہ: <input type="date" style="width: 140px;"></div>
+            </div>
+
+            <table class="urdu-table">
+                <tr>
+                    <td class="num-col">1</td>
+                    <td class="label-col">نام معلم</td>
+                    <td><input type="text" data-sync="teacherName"></td>
+                </tr>
+                <tr>
+                    <td class="num-col">2</td>
+                    <td class="label-col">ولدیت / زوجیت</td>
+                    <td><input type="text" data-sync="teacherParent"></td>
+                </tr>
+                <tr>
+                    <td class="num-col">3</td>
+                    <td class="label-col">تاریخ پیدائش (ہندسوں میں)</td>
+                    <td><input type="text" data-sync="dob" placeholder="مثلاً: 01-01-1998"></td>
+                </tr>
+                <tr>
+                    <td class="num-col">4</td>
+                    <td class="label-col">تاریخ پیدائش (لفظوں میں)</td>
+                    <td><input type="text" data-sync="dobWords"></td>
+                </tr>
+                <tr>
+                    <td class="num-col">5</td>
+                    <td class="label-col">تعلیمی قابلیت</td>
+                    <td><input type="text" data-sync="qualification" placeholder="انگلش / ہیلتھ / فیشن ڈیزائننگ / کمپیوٹر وغیرہ"></td>
+                </tr>
+                <tr>
+                    <td class="num-col">6</td>
+                    <td class="label-col">عہدہ / سکول ٹیچر انٹر نیز</td>
+                    <td>غیر مستقل (مکمل طور پر عارضی بنیاد پر)</td>
+                </tr>
+                <tr>
+                    <td class="num-col">7</td>
+                    <td class="label-col">تاریخ آغاز ملازمت</td>
+                    <td><input type="date" data-sync="joiningDate" style="width: 140px;"> (غیر مستقل)</td>
+                </tr>
+                <tr>
+                    <td class="num-col">8</td>
+                    <td class="label-col">تاریخ تقرری بطور انٹر نیز</td>
+                    <td><input type="date" style="width: 140px;"></td>
+                </tr>
+                <tr>
+                    <td class="num-col">9</td>
+                    <td class="label-col">پیریڈ برائے تقرری</td>
+                    <td><input type="text" data-sync="period" value="9 ماہ" placeholder="مثلاً: 9 ماہ"></td>
+                </tr>
+                <tr>
+                    <td class="num-col">10</td>
+                    <td class="label-col">آرڈر نمبر انٹر نیز مع تاریخ</td>
+                    <td><input type="text"></td>
+                </tr>
+                <tr>
+                    <td class="num-col">11</td>
+                    <td class="label-col">گھر کا پتہ</td>
+                    <td><input type="text" data-sync="teacherAddress"></td>
+                </tr>
+            </table>
+
+            <div class="field-line" style="margin-top: 20px;">
+                <strong>رپورٹ متعلقہ چارج:</strong> <input type="text" data-sync="teacherName" style="width: 200px;"> نے بطور <strong>سکول ٹیچر انٹر نیز</strong> چارج سنبھال لیا ہے۔
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 30px;">
+                <div>تاریخ: <input type="date" data-sync="joiningDate" style="width: 140px;"></div>
+                <div style="text-align: center;">
+                    <div style="margin-bottom: 5px; font-weight: bold;">مہر و دستخط سربراہ ادارہ</div>
+                    <div class="stamp-box" style="margin: 0 auto;"></div>
+                </div>
+            </div>
+
+            <hr style="margin: 30px 0 20px 0; border: none; border-top: 1px dashed #000;">
+
+            <div>
+                <p style="font-weight: bold; margin-bottom: 10px;">پرت ہذا برائے اطلاع و مناسب کارروائی پیش خدمت ہے:</p>
+                <p style="margin-right: 15px;">جناب ڈسٹرکٹ ایجوکیشن آفیسر (سیکنڈری) <input type="text" data-sync="district" style="width: 200px;" placeholder="ضلع کا نام"></p>
+                <p style="margin-right: 15px;">معلم مذکور / آفس کاپی</p>
+            </div>
+
+            <div style="display: flex; justify-content: flex-end; margin-top: 30px;">
+                <div style="text-align: center;">
+                    <div style="margin-bottom: 5px; font-weight: bold;">مہر و دستخط سربراہ ادارہ</div>
+                    <div class="stamp-box" style="margin: 0 auto;"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Sticky Footer with WhatsApp Link -->
+    <footer class="site-footer">
+        <div class="footer-branding">
+            GM-TECH SOLUTIONS
+        </div>
+        <a href="https://wa.me/923336283082" target="_blank" class="whatsapp-btn" rel="noopener noreferrer">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.572-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+            </svg>
+            Contact GM-TECH SOLUTIONS
+        </a>
+    </footer>
+
+    <!-- Script to Auto-Sync Shared Fields Across Pages -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const syncInputs = document.querySelectorAll('input[data-sync]');
+
+            syncInputs.forEach(input => {
+                input.addEventListener('input', function () {
+                    const key = this.getAttribute('data-sync');
+                    const value = this.value;
+
+                    // Update all other inputs with the same data-sync attribute
+                    syncInputs.forEach(otherInput => {
+                        if (otherInput !== this && otherInput.getAttribute('data-sync') === key) {
+                            otherInput.value = value;
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
